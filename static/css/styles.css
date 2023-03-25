@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#top-half {
+    height: 1%;
+    background: black;
+    color: red;
+}
+
+h1 {
+    color:white;
+}
+
+body {
+    height: 2000px;
+}
+
+
+
+a {
+    text-decoration: none;
+}
