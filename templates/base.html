@@ -1,4 +1,22 @@
 <!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head>
+    <body>
+    
+    <div class="topnav">
+      <a class="active" href="/">Home</a>
+      {% if username %}
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login">Login</a> 
+            {% endif %}
+    </div>
+    
+    
+    
+    </body>    
 <html lang="en">
     <head>
         <meta charset="utf8"/>
@@ -9,13 +27,21 @@
         <title>Stocks App</title>
     </head>
     <body>
-        <nav>
-            <a href="/">home</a>
-            <a href="/login">Login</a>
-            
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class ="messages">
+                    {% for message in messages %}
+                        <li>{{message}}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <nav class="gradient">
         </nav>
         {% block content %}
         {% endblock %}
     </body>
+   
+    
 
 </html>
