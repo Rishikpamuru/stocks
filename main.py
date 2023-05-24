@@ -43,12 +43,17 @@ def get_current_user():
     userid = session.get("userid")
     return db.session.query(User).get(userid)
 
+def current_username():
+    user = get_current_user()
+    return user .username if user else None
+
+
 
 
 @app.route("/")
 def index():
     user = get_current_user()
-    return render_template("index.html", username=session.get("username"))
+    return render_template("index.html", username=current_username())
 
 @app.route("/account")
 def account():
@@ -113,5 +118,5 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["username"]
+    del session["userid"]
     return redirect(url_for("login"))
