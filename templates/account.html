@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    <ul>
+        {% for row in stocks %}
+            <li>
+                <h4>{{row.name}}</h4>
+                <p><B>{{row.symbol}}</B></p>
+                <p><B>{{row.price}}</B></p>
+                <p><B>{{row.quantity}}</B></p>
+                <p>total{{row.symbol}}</B></p>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock %}

@@ -41,8 +41,7 @@ class Stock(db.Model):
 
 def get_current_user():
     userid = session.get("userid")
-    user = db.session.query(User).get(userid)
-    return user
+    return db.session.query(User).get(userid)
 
 
 
@@ -51,8 +50,31 @@ def index():
     user = get_current_user()
     return render_template("index.html", username=session.get("username"))
 
-@app.route("/add")
+@app.route("/account")
+def account():
+
+    user = get_current_user()
+
+
+    stocks = db.session.query(Stock).filter_by(user=user.id).all()
+    return render_template("account.html", stocks=stocks)
+
+@app.route("/add", methods=["GET", "POST"])
 def add():
+    if request.method == "POST":
+        user = get_current_user()
+
+        name = request.form["name"]
+        symbol = request.form["symbol"]
+        price = request.form["price"]
+        quantity = request.form["quantity"]
+
+        if user:
+            stock = Stock(name=name, symbol =symbol,
+                         price=price, quantity=quantity,
+                          user=user.id)
+            db.session.add(stock)
+            db.session.commit()
     return render_template("add.html")
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -80,9 +102,9 @@ def login():
         username = request.form.get("username")
         password =  md5(request.form.get("password"))
 
-        username = db.session.query(User).filter_by(username=username).first()
-        if username and username .password == password:
-            session["userid"] = username.id
+        user = db.session.query(User).filter_by(username=username).first()
+        if user and user.password == password:
+            session["userid"] = user.id
             return redirect(url_for("index"))
         else:
             flash("invalid login!!!!!!!!!!!!!!!")
